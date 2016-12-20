@@ -1,0 +1,5 @@
+- src: Dalee.bootstrap
+- src: Dalee.install-locales
+- src: Dalee.install-elastic
+- src: Dalee.install-logstash
+- src: Dalee.install-kibana

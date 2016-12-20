@@ -1,0 +1,4 @@
+- include: nginx.yml
+- include: elastic.yml
+- include: logstash.yml
+- include: kibana.yml

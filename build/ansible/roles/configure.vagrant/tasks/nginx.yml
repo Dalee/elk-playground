@@ -1,0 +1,12 @@
+- name: nginx - main configuration file
+  template:
+    src: "nginx/kibana.conf.j2"
+    dest: "/etc/nginx/virtuals/kobana.conf"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+- name: nginx - restart (forced)
+  service:
+    name: "nginx"
+    state: "restarted"

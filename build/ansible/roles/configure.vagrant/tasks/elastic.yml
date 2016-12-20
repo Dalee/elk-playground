@@ -1,0 +1,12 @@
+- name: elastic - main configuration file
+  template:
+    src: "elastic/elasticsearch.yml.j2"
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+    mode: 0644
+    owner: "elasticsearch"
+    group: "elasticsearch"
+
+- name: elastic - restart (forced)
+  service:
+    name: "elasticsearch"
+    state: "restarted"

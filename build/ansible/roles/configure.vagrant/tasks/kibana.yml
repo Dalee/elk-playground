@@ -1,0 +1,12 @@
+- name: kibana - main configuration file
+  template:
+    src: "kibana/kibana.yml.j2"
+    dest: "/etc/kibana/kibana.yml"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+- name: kibana - restart (forced)
+  service:
+    name: "kibana"
+    state: "restarted"

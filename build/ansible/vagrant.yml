@@ -1,0 +1,9 @@
+- hosts: localhost
+  connection: local
+  roles:
+    - Dalee.bootstrap
+    - Dalee.install-locales
+    - Dalee.install-elastic
+    - Dalee.install-logstash
+    - Dalee.install-kibana
+    - configure.vagrant
