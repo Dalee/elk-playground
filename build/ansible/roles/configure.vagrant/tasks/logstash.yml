@@ -1,3 +1,13 @@
+- name: logstash - install haveged daemon
+  apt:
+    name: "haveged"
+    state: "installed"
+
+- name: logstash - haveged daemon is running
+  systemd:
+    name: "haveged"
+    state: "started"
+
 - name: logstash - main configuration file
   template:
     src: "logstash/logstash.yml.j2"
@@ -6,9 +16,18 @@
     owner: "root"
     group: "root"
 
-- name: logstash - copy configurations
+- name: logstash - copy project configuration
   copy:
     src: "logstash/conf.d"
+    dest: "/etc/logstash"
+    mode: 0644
+    force: "yes"
+    owner: "root"
+    group: "root"
+
+- name: logstash - copy project mappings
+  copy:
+    src: "logstash/index.d"
     dest: "/etc/logstash"
     mode: 0644
     force: "yes"

@@ -1,0 +1,39 @@
+{
+  "template": "logstash-*",
+  "mappings": {
+    "_default_": {
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+        "@timestamp": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "@version": {
+          "type": "integer",
+          "index": "not_analyzed"
+        },
+        "host": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "index_name": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "syslog_severity": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "syslog_facility": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "syslog_message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

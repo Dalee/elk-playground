@@ -1,0 +1,113 @@
+{
+  "template": "logstash-nginx-access",
+  "mappings": {
+    "_default_": {
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+        "@timestamp": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "@version": {
+          "type": "integer",
+          "index": "not_analyzed"
+        },
+        "host": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "index_name": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "syslog_severity": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "syslog_facility": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "geoip": {
+          "type": "object",
+          "dynamic": true,
+          "properties": {
+            "country": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "coordinates": {
+              "type": "geo_point"
+            }
+          }
+        },
+        "user_agent": {
+          "type": "object",
+          "dynamic": false,
+          "properties": {
+            "patch": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "os": {
+              "type": "string"
+            },
+            "major": {
+              "type": "integer",
+              "index": "not_analyzed"
+            },
+            "minor": {
+              "type": "integer",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string"
+            },
+            "os_name": {
+              "type": "string"
+            },
+            "device": {
+              "type": "string"
+            }
+          }
+        },
+        "request": {
+          "type": "object",
+          "dynamic": false,
+          "properties": {
+            "remote_addr": {
+              "type": "ip"
+            },
+            "host": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "uri": {
+              "type": "string"
+            },
+            "referer": {
+              "type": "string"
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "dynamic": false,
+          "properties": {
+            "status": {
+              "type": "integer"
+            },
+            "length": {
+              "type": "long"
+            }
+          }
+        }
+      }
+    }
+  }
+}

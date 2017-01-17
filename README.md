@@ -8,7 +8,32 @@ Use vagrant to run:
 $ vagrant up
 ```
 
-Then go to kibana on [http://elk.local](http://elk.local]).
+Create two indexes after provision
+```
+$ curl -XDELETE localhost:9200/*
+
+$ curl -X PUT "http://localhost:9200/logstash-nginx-access/" \
+    -d@/etc/logstash/index.d/logstash-nginx-access.json
+
+$ curl -X PUT "http://localhost:9200/logstash-nginx-error/" \
+    -d@/etc/logstash/index.d/logstash-default.json
+```
+
+## Load single event with geoip information
+
+```
+$ curl -H "X-Real-Ip: 89.17.48.5" -H "Host: elk.local" 127.1 -v
+```
+
+## Kibana Web-interface
+
+[http://elk.local](http://elk.local])
+
+
+## Sample configuration bundled
+
+ * [NGINX syslog output](ansible/roles/configure.vagrant/templates/kibana.conf)
+ * [Parser and Mapping configuration](ansible/roles/configure.vagrant/files/)
 
 ## Links
 

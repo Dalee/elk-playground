@@ -1,6 +1,25 @@
+# setup geoip database
+geoip_country /usr/share/GeoIP/GeoIP.dat;
+geoip_city /usr/share/GeoIP/GeoLiteCity.dat;
+
+# real-ip
+set_real_ip_from  127.0.0.1;
+real_ip_header    X-Real-Ip;
+real_ip_recursive on;
+
+# logstash format
+log_format logstash '$remote_addr "$host" '
+                    '$request_method "$request_uri" '
+                    '"$http_referer" "$http_user_agent" '
+                    '$status $bytes_sent '
+                    '$geoip_country_code $geoip_latitude $geoip_longitude';
+
 server {
-    listen 80;
     server_name _;
+    listen 80;
+
+    access_log syslog:server=127.0.0.1:5001,facility=daemon,severity=info logstash;
+    error_log syslog:server=127.0.0.1:5002,facility=daemon,severity=error error;
 
     location / {
         proxy_pass http://localhost:5601;
