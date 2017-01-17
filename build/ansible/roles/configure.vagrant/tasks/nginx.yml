@@ -1,7 +1,30 @@
-- name: nginx - main configuration file
+- name: nginx - add geoip module
+  apt:
+    name: "{{ item }}"
+    state: "installed"
+  with_items:
+    - "nginx-module-geoip"
+    - "geoip-database-contrib"
+
+- name: nginx - install load_module config
+  template:
+    src: "nginx/modules.conf.j2"
+    dest: "/etc/nginx/modules.conf"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: nginx - ensure include modules present
+  lineinfile:
+    dest: "/etc/nginx/nginx.conf"
+    line: "include /etc/nginx/modules.conf;"
+    state: "present"
+    insertbefore: BOF
+
+- name: nginx - project configuration file
   template:
     src: "nginx/kibana.conf.j2"
-    dest: "/etc/nginx/virtuals/kobana.conf"
+    dest: "/etc/nginx/virtuals/kibana.conf"
     mode: 0644
     owner: "root"
     group: "root"
