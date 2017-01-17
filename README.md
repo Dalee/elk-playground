@@ -32,8 +32,8 @@ $ curl -H "X-Real-Ip: 89.17.48.5" -H "Host: elk.local" 127.1 -v
 
 ## Sample configuration bundled
 
- * [NGINX syslog output](ansible/roles/configure.vagrant/templates/kibana.conf)
- * [Parser and Mapping configuration](ansible/roles/configure.vagrant/files/)
+ * [NGINX syslog output](build/ansible/roles/configure.vagrant/templates/nginx/kibana.conf.j2)
+ * [Parser and Mapping configuration](build/ansible/roles/configure.vagrant/files/)
 
 ## Links
 
