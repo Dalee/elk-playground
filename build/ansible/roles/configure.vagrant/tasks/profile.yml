@@ -1,0 +1,8 @@
+#
+- name: profile - install .bash_profile config
+  template:
+    src: "bash_profile.j2"
+    dest: "/home/vagrant/.bash_profile"
+    owner: "vagrant"
+    group: "vagrant"
+    mode: 0644
