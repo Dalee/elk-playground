@@ -2,22 +2,35 @@
 
 ## Usage
 
-Use vagrant to run:
-
 ```bash
 $ vagrant up
+$ vagrant ssh
+$ cd /home/web/elk
+$ make vagrant
 ```
 
-Create two indexes after provision
-```
-$ curl -XDELETE localhost:9200/*
+This will install template mappings for the following indexes (logstash automatic mapping 
+management is disabled): 
+ * `logstash-frontend-access-*`
+ * `logstash-frontend-error-*`
+ * `logstash-backend-*`
+ * `logstash-error-*`
 
-$ curl -X PUT "http://localhost:9200/logstash-nginx-access/" \
-    -d@/etc/logstash/index.d/logstash-nginx-access.json
+So, what those mappings all about?
 
-$ curl -X PUT "http://localhost:9200/logstash-nginx-error/" \
-    -d@/etc/logstash/index.d/logstash-default.json
+`logstash-frontend-*` - indices for `access_log` and `error_log` NGINX configuration parameters.
+`log_format` is described in bundled configuration sample:
 ```
+log_format logstash '$remote_addr "$host" '
+                    '$request_method "$request_uri" '
+                    '"$http_referer" "$http_user_agent" '
+                    '$status $bytes_sent '
+                    '$geoip_country_code $geoip_latitude $geoip_longitude';
+```
+
+`logstash-backend-*` - indices for [dalee-logger](https://github.com/Dalee/node-logger) library
+
+`logstash-error-*` - indices for logstash `_grokparsefailure` events  
 
 ## Load single event with geoip information
 
@@ -29,11 +42,13 @@ $ curl -H "X-Real-Ip: 89.17.48.5" -H "Host: elk.local" 127.1 -v
 
 [http://elk.local](http://elk.local])
 
+## Bundled configurations
 
-## Sample configuration bundled
+Few sample configurations for frontend (nginx) and backend (right now, only node.js)
 
- * [NGINX syslog output](build/ansible/roles/configure.vagrant/templates/nginx/kibana.conf.j2)
  * [Parser and Mapping configuration](build/ansible/roles/configure.vagrant/files/)
+ * [Sample NGINX config](build/ansible/roles/configure.vagrant/templates/nginx/kibana.conf.j2)
+ * [Backend logging library](https://github.com/Dalee/node-logger)
 
 ## Links
 
